@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>OneSignal Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
     <script>
@@ -9,10 +11,18 @@
       OneSignal.push(function() {
         OneSignal.init({
           appId: "901d7936-7ffd-43d4-b3f2-67af7fc5ce34",
+          requiresUserPrivacyConsent: true,
+          autoResubscribe: true,
           notifyButton: {
             enable: true,
           },
+          welcomeNotification: {
+            "title": "Awesome!",
+            "message": "Thanks for subscribing!",
+            // "url": "" /* Leave commented for the notification to not open a window on Chrome and Firefox (on Safari, it opens to your webpage) */
+          }
         });
+        OneSignal.showNativePrompt();
       });
     </script>
 
