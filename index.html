@@ -11,19 +11,29 @@
       OneSignal.push(function() {
         OneSignal.init({
           appId: "901d7936-7ffd-43d4-b3f2-67af7fc5ce34",
-          requiresUserPrivacyConsent: true,
           autoResubscribe: true,
-          notifyButton: {
-            enable: true,
-          },
           welcomeNotification: {
             "title": "Awesome!",
             "message": "Thanks for subscribing!",
             // "url": "" /* Leave commented for the notification to not open a window on Chrome and Firefox (on Safari, it opens to your webpage) */
-          }
+          },
         });
+        var notificationPromptDelay = 30000;
+        /* Use navigation timing to find out when the page actually loaded instead of using setTimeout() only which can be delayed by script execution */
+        var navigationStart = window.performance.timing.navigationStart;
+        /* Get current time */
+        var timeNow = Date.now();
+        /* Prompt the user if enough time has elapsed */
+        setTimeout(promptAndSubscribeUser, Math.max(notificationPromptDelay - (timeNow - navigationStart), 0));
         OneSignal.showNativePrompt();
       });
+      function promptAndSubscribeUser() {
+        window.OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+          if (!isEnabled) {
+            window.OneSignal.showSlidedownPrompt();
+          }
+        });
+      }
     </script>
 
   </head>
