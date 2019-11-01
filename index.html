@@ -28,13 +28,11 @@
         OneSignal.showNativePrompt();
       });
       function promptAndSubscribeUser() {
-        console.log('hola')
         window.OneSignal.isPushNotificationsEnabled(function(isEnabled) {
           if (!isEnabled) {
             window.OneSignal.showSlidedownPrompt();
           }
         });
-        OneSignal.setSubscription(true)
       }
     </script>
 
