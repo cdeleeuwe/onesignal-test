@@ -12,6 +12,7 @@
         OneSignal.init({
           appId: "901d7936-7ffd-43d4-b3f2-67af7fc5ce34",
           autoResubscribe: true,
+          allowLocalhostAsSecureOrigin: true,
           welcomeNotification: {
             "title": "Awesome!",
             "message": "Thanks for subscribing!",
@@ -41,7 +42,32 @@
   </head>
   <body>
       <a href="#" id="my-notification-button" style="display: none;">Subscribe to Notifications</a>
+
+      <div>
+        <h3>Email</h3>
+        <input type="text" id="email-input">
+        <a href="#" onclick="setEmail()">Set</a>
+        <a href="#" onclick="logoutEmail()">Logout</a>
+      </div>
+
+      <div>
+        <h3>User ID: <span id="user-id"></span></h3>
+        <a href="#" onclick="getUserId()">Get user ID</a>
+      </div>
       <script>
+      function setEmail() {
+        const email = document.getElementById('email-input').value;
+        OneSignal.setEmail(email)
+      }
+      function logoutEmail() {
+        const email = document.getElementById('email-input').value;
+        OneSignal.logoutEmail(email)
+      }
+      function getUserId() {
+        const userIdEl = document.getElementById('user-id');
+        OneSignal.getUserId()
+          .then(userId => userIdEl.innerHTML = userId);
+      }
       function onManageWebPushSubscriptionButtonClicked(event) {
           getSubscriptionState().then(function(state) {
               if (state.isPushEnabled) {
